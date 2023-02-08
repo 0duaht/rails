@@ -365,6 +365,7 @@ module ActiveRecord
       end
 
       def load_schema(db_config, format = ActiveRecord.schema_format, file = nil) # :nodoc:
+        format = db_config.schema_format
         file ||= schema_dump_path(db_config, format)
         return unless file
 
@@ -421,6 +422,8 @@ module ActiveRecord
       end
 
       def dump_schema(db_config, format = ActiveRecord.schema_format) # :nodoc:
+        format = db_config.schema_format
+
         require "active_record/schema_dumper"
         filename = schema_dump_path(db_config, format)
         return unless filename

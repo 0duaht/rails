@@ -124,7 +124,7 @@ module ActiveRecord
       #
       # If the config option is set that will be used. Otherwise Rails
       # will generate the filename from the database config name.
-      def schema_dump(format = ActiveRecord.schema_format)
+      def schema_dump(format = schema_format)
         if configuration_hash.key?(:schema_dump)
           if config = configuration_hash[:schema_dump]
             config
@@ -138,6 +138,13 @@ module ActiveRecord
 
       def database_tasks? # :nodoc:
         !replica? && !!configuration_hash.fetch(:database_tasks, true)
+      end
+
+      # Determines what format to use when dumping/loading the schema/structure files and the
+      # filename that should be used.
+      # If the config option is set that will be used. Otherwise defaults to ActiveRecord.schema_format
+      def schema_format
+        configuration_hash[:schema_format] || ActiveRecord.schema_format
       end
 
       private
